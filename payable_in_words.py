@@ -1,71 +1,71 @@
 class PayableInWords():
-    units = ['','one','two','three','four','five','six','seven','eight','nine'];
-    teens = ['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen']
-    tens  = ['','','twenty','thirty','fourty','fifty','sixty','seventy','eighty','ninety']
-    suffixes = ['',' thousand, ',' lakh, ',' crore, ']
+    __units = ['','one','two','three','four','five','six','seven','eight','nine'];
+    __teens = ['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen']
+    __tens  = ['','','twenty','thirty','fourty','fifty','sixty','seventy','eighty','ninety']
+    __suffixes = ['',' thousand, ',' lakh, ',' crore, ']
     
-    amt = ''
-    res = ''
+    __amt = ''
+    __res = ''
     
     def __init__(self, inp):
         if( inp=="0" ):
-            self.res = "zero"
+            self.__res = "zero"
         else:
-            self.formatString(inp)
-            self.num2words()
+            self.__formatString(inp)
+            self.__num2words()
             
-    def formatString(self, inp):
-        self.amt = inp.split(',')
-        self.amt.reverse()
-        self.amt = ['0'+x if len(x)==1 else x for x in self.amt]
-        if len(self.amt[0])!=3:
-            self.amt[0] = '0' + self.amt[0]
+    def __formatString(self, inp):
+        self.__amt = inp.split(',')
+        self.__amt.reverse()
+        self.__amt = ['0'+x if len(x)==1 else x for x in self.__amt]
+        if len(self.__amt[0])!=3:
+            self.__amt[0] = '0' + self.__amt[0]
             
-    def twoDigit(self, n):
+    def __twoDigit(self, n):
         if(n[0]=='0'):
-            return ( self.units[int(n[1])] )
+            return ( self.__units[int(n[1])] )
         elif(n[0]=='1'):
-            return ( self.teens[int(n[1])] )
+            return ( self.__teens[int(n[1])] )
         else:
             if(n[1]=='0'):
-                return ( self.tens[int(n[0])] ) 
-            return ( self.tens[int(n[0])] + ' ' + self.units[int(n[1])] )
+                return ( self.__tens[int(n[0])] ) 
+            return ( self.__tens[int(n[0])] + ' ' + self.__units[int(n[1])] )
         
-    def threeDigit(self, n):
+    def __threeDigit(self, n):
         if(n[0]=='0'):
-            return (self.twoDigit(n[1:]))
+            return (self.__twoDigit(n[1:]))
         else:
             if n[1:]=="00":
-                return ( self.units[int(n[0])] +  ' hundred ' + self.twoDigit(n[1:]))
+                return ( self.__units[int(n[0])] +  ' hundred ' + self.__twoDigit(n[1:]))
             else:
-                return ( self.units[int(n[0])] +  ' hundred and ' + self.twoDigit(n[1:]))
+                return ( self.__units[int(n[0])] +  ' hundred and ' + self.__twoDigit(n[1:]))
         
-    def num2words(self):
-        for i in range(len(self.amt)):
-            if(self.amt[i] == '00'): 
+    def __num2words(self):
+        for i in range(len(self.__amt)):
+            if(self.__amt[i] == '00'): 
                 continue
-            if(self.amt[i] == '000'):
-                self.res = self.suffixes[0] + self.res
+            if(self.__amt[i] == '000'):
+                self.__res = self.__suffixes[0] + self.__res
                 continue
             
-            if i==1 and ('and ' not in self.res) and self.amt[0]!='000':
-                self.res = 'and ' + self.res
+            if i==1 and ('and ' not in self.__res) and self.__amt[0]!='000':
+                self.__res = 'and ' + self.__res
                 
 
-            if( len(self.amt[i]) == 2 ):
-                self.res = self.twoDigit(self.amt[i]) + self.suffixes[i] + self.res
+            if( len(self.__amt[i]) == 2 ):
+                self.__res = self.__twoDigit(self.__amt[i]) + self.__suffixes[i] + self.__res
             else:
-                self.res = self.threeDigit(self.amt[i]) + self.suffixes[i] + self.res
+                self.__res = self.__threeDigit(self.__amt[i]) + self.__suffixes[i] + self.__res
                 
     def __str__(self):
-        if self.res[-2:]==', ':
-            return self.res[:-2].capitalize() + ' rupees only'
-        return self.res.capitalize() + ' rupees only'
+        if self.__res[-2:]==', ':
+            return self.__res[:-2].capitalize() + ' rupees only'
+        return self.__res.capitalize() + ' rupees only'
     
     def getString(self):
-        if self.res[-2:]==', ':
-            return self.res[:-2].capitalize() + ' rupees only'
-        return self.res.capitalize() + ' rupees only'
+        if self.__res[-2:]==', ':
+            return self.__res[:-2].capitalize() + ' rupees only'
+        return self.__res.capitalize() + ' rupees only'
         
 def main():
     print(PayableInWords("0")) # Zero rupees only
