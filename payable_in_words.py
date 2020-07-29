@@ -76,6 +76,7 @@ def main():
     print(PayableInWords("12,223")) # Twelve thousand, two hundred and twenty three rupees only
     print(PayableInWords("1,00,105")) # One lakh, one hundred and five rupees only
     print(PayableInWords("20,00,000")) # Twenty lakh rupees only
+    print(PayableInWords("99,99,99,999")) # Ninety nine crore, ninety nine lakh, ninety nine thousand, nine hundred and ninety nine rupees only
 
     obj = PayableInWords("5,00,50,005") 
     words = obj.getString()
